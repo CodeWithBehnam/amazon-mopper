@@ -1,5 +1,30 @@
 import { defineManifest } from '@crxjs/vite-plugin'
 
+// All major Amazon marketplace domains
+const AMAZON_DOMAINS = [
+  '*://*.amazon.com/*',
+  '*://*.amazon.co.uk/*',
+  '*://*.amazon.de/*',
+  '*://*.amazon.fr/*',
+  '*://*.amazon.it/*',
+  '*://*.amazon.es/*',
+  '*://*.amazon.ca/*',
+  '*://*.amazon.com.mx/*',
+  '*://*.amazon.com.br/*',
+  '*://*.amazon.co.jp/*',
+  '*://*.amazon.in/*',
+  '*://*.amazon.cn/*',
+  '*://*.amazon.com.au/*',
+  '*://*.amazon.nl/*',
+  '*://*.amazon.sg/*',
+  '*://*.amazon.ae/*',
+  '*://*.amazon.sa/*',
+  '*://*.amazon.se/*',
+  '*://*.amazon.pl/*',
+  '*://*.amazon.com.tr/*',
+  '*://*.amazon.eg/*',
+]
+
 export default defineManifest({
   manifest_version: 3,
   name: 'Amazon Mopper',
@@ -18,10 +43,10 @@ export default defineManifest({
     },
   },
   permissions: ['storage'],
-  host_permissions: ['*://*.amazon.*/*'],
+  host_permissions: AMAZON_DOMAINS,
   content_scripts: [
     {
-      matches: ['*://*.amazon.*/*'],
+      matches: AMAZON_DOMAINS,
       js: ['src/content/index.tsx'],
       run_at: 'document_idle',
     },

@@ -163,18 +163,19 @@ export function App({ shadowRoot }: AppProps) {
         })
       }
 
-      // Round prices
-      if (settings.roundPrices && data.currentPrice) {
+      // Round prices - target only the main price, not RRP/Was prices
+      if (settings.roundPrices && data.currentPrice && !element.dataset.mopperPriceRounded) {
+        element.dataset.mopperPriceRounded = 'true'
         const roundedText = formatRoundedPrice(data.currentPrice, data.currency)
-        const priceEl = element.querySelector('.a-price .a-offscreen')
-        if (priceEl && !element.dataset.mopperPriceRounded) {
-          element.dataset.mopperPriceRounded = 'true'
-          // Add rounded price display next to original
+
+        // Find the main price container (not struck-through RRP prices)
+        const mainPriceContainer = element.querySelector('.a-price:not([data-a-strike="true"])')
+        if (mainPriceContainer && !mainPriceContainer.querySelector('.mopper-rounded-price')) {
           const roundedSpan = document.createElement('span')
           roundedSpan.className = 'mopper-rounded-price'
-          roundedSpan.style.cssText = 'margin-left: 8px; font-weight: bold; color: #000;'
+          roundedSpan.style.cssText = 'margin-left: 8px; font-weight: bold; color: #B12704; font-size: 1.1em;'
           roundedSpan.textContent = roundedText
-          priceEl.parentElement?.appendChild(roundedSpan)
+          mainPriceContainer.parentElement?.insertBefore(roundedSpan, mainPriceContainer.nextSibling)
         }
       }
 

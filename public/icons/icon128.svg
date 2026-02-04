@@ -1,8 +1,22 @@
 <svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with neobrutalist border -->
   <rect width="128" height="128" fill="#FFFF00"/>
-  <rect x="4" y="4" width="120" height="120" fill="#FFFF00" stroke="#000" stroke-width="4"/>
-  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
-        font-family="system-ui, sans-serif" font-weight="bold" font-size="52px" fill="#000">
-    AM
-  </text>
+  <rect x="4" y="4" width="120" height="120" fill="#FFFF00" stroke="#000" stroke-width="6"/>
+
+  <!-- Shopping bag body -->
+  <rect x="30" y="48" width="68" height="60" fill="#FFFFFF" stroke="#000" stroke-width="5"/>
+  <!-- Bag shadow (neobrutalist offset) -->
+  <rect x="34" y="52" width="68" height="60" fill="#000" opacity="0.15"/>
+
+  <!-- Handle -->
+  <path d="M46 48 L46 36 Q64 18 82 36 L82 48" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Fire/deal badge -->
+  <circle cx="100" cy="28" r="18" fill="#FF0000" stroke="#000" stroke-width="4"/>
+  <!-- Percent sign -->
+  <text x="100" y="34" font-size="20" font-weight="bold" fill="#FFF" text-anchor="middle" font-family="system-ui">%</text>
+
+  <!-- Small decorative lines on bag -->
+  <line x1="50" y1="70" x2="78" y2="70" stroke="#000" stroke-width="3"/>
+  <line x1="50" y1="82" x2="70" y2="82" stroke="#000" stroke-width="3"/>
 </svg>

@@ -1,8 +1,15 @@
 <svg width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
   <rect width="48" height="48" fill="#FFFF00"/>
   <rect x="2" y="2" width="44" height="44" fill="#FFFF00" stroke="#000" stroke-width="3"/>
-  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
-        font-family="system-ui, sans-serif" font-weight="bold" font-size="20px" fill="#000">
-    AM
-  </text>
+  <!-- Shadow offset -->
+  <rect x="5" y="5" width="38" height="38" fill="none" stroke="#000" stroke-width="0" transform="translate(2, 2)" opacity="0.1"/>
+  <!-- Shopping bag shape -->
+  <path d="M12 18 L12 40 L36 40 L36 18 Z" fill="#FFFFFF" stroke="#000" stroke-width="3"/>
+  <!-- Handle -->
+  <path d="M18 18 L18 12 Q24 6 30 12 L30 18" fill="none" stroke="#000" stroke-width="3"/>
+  <!-- Fire/deal indicator -->
+  <circle cx="38" cy="10" r="7" fill="#FF0000" stroke="#000" stroke-width="2"/>
+  <!-- Percent sign in circle -->
+  <text x="38" y="13" font-size="8" font-weight="bold" fill="#FFF" text-anchor="middle">%</text>
 </svg>

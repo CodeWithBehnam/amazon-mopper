@@ -19,7 +19,6 @@ import {
 } from './lib/selectors'
 import { DiscountBadge } from './components/DiscountBadge'
 import { BestValueBadge, applyBestValueBorder, removeBestValueBorder } from './components/BestValueBorder'
-import { DeliveryCountdown } from './components/DeliveryCountdown'
 
 interface ProductBadgeState {
   element: HTMLElement
@@ -190,15 +189,29 @@ export function App({ shadowRoot }: AppProps) {
         }
       }
 
-      // Append delivery countdown to delivery text
-      if (settings.showDeliveryCountdown && state.daysUntilDelivery !== null) {
+      // Append delivery countdown directly as HTML (simpler than React portal)
+      if (settings.showDeliveryCountdown && state.daysUntilDelivery !== null && !element.dataset.mopperDeliveryAdded) {
+        element.dataset.mopperDeliveryAdded = 'true'
+        const days = state.daysUntilDelivery
+        const text = days === 0 ? 'Today' : days === 1 ? 'Tomorrow' : `${days} days`
+
+        // Find delivery text element
         const deliveryEl = querySelector(element, DELIVERY_SELECTORS)
-        if (deliveryEl instanceof HTMLElement && !element.dataset.mopperDeliveryAdded) {
-          element.dataset.mopperDeliveryAdded = 'true'
-          // Create a container for the countdown badge
-          const countdownContainer = document.createElement('span')
-          countdownContainer.className = 'mopper-delivery-countdown'
-          deliveryEl.appendChild(countdownContainer)
+        if (deliveryEl instanceof HTMLElement) {
+          const countdownBadge = document.createElement('span')
+          countdownBadge.className = 'mopper-delivery-badge'
+          countdownBadge.style.cssText = `
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 6px;
+            background: #FFFF00;
+            border: 2px solid #000;
+            font-weight: bold;
+            font-size: 11px;
+            box-shadow: 2px 2px 0 #000;
+          `
+          countdownBadge.textContent = `📦 ${text}`
+          deliveryEl.parentElement?.appendChild(countdownBadge)
         }
       }
     })
@@ -249,19 +262,8 @@ export function App({ shadowRoot }: AppProps) {
       }
     }
 
-    // Delivery countdown (rendered inline with delivery text)
-    if (settings.showDeliveryCountdown && daysUntilDelivery !== null) {
-      const deliveryTarget = element.querySelector('.mopper-delivery-countdown')
-      if (deliveryTarget) {
-        portals.push(
-          createPortal(
-            <DeliveryCountdown days={daysUntilDelivery} />,
-            deliveryTarget,
-            `delivery-${element.dataset.asin || Math.random()}`
-          )
-        )
-      }
-    }
+    // Delivery countdown is now rendered as plain HTML in the useEffect above
+    // (simpler than React portals for inline text injection)
 
     return portals
   })

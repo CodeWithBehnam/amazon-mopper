@@ -34,13 +34,18 @@ export const PRICE_SELECTORS = {
   ],
 }
 
-// Delivery date selectors
+// Delivery date selectors - ordered by specificity
 export const DELIVERY_SELECTORS = [
-  '#mir-layout-DELIVERY_BLOCK-slot-PRIMARY_DELIVERY_MESSAGE_LARGE',
-  '.a-text-bold[data-csa-c-delivery-time]',
-  '[data-csa-c-type="element"][data-csa-c-content-id*="delivery"]',
-  '.a-color-success.a-text-bold',
+  // Search results page selectors
   '[data-csa-c-delivery-time]',
+  '.a-row.a-size-base.a-color-secondary.s-align-children-center',
+  '.a-color-base.a-text-bold',
+  // Contains "delivery" or "Tomorrow"
+  'span.a-text-bold',
+  // Product page selectors
+  '#mir-layout-DELIVERY_BLOCK-slot-PRIMARY_DELIVERY_MESSAGE_LARGE',
+  '#delivery-message',
+  '.a-color-success.a-text-bold',
 ]
 
 // Prime icon selectors

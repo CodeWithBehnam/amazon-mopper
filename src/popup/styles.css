@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+body {
+  width: 280px;
+  min-height: 320px;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #FFFFFF;
+}
+
+/* Neobrutalism Toggle Switch */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 2px solid #000000;
+}
+
+.toggle-container:last-child {
+  border-bottom: none;
+}
+
+.toggle-label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #000000;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  background-color: #FFFFFF;
+  border: 2px solid #000000;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toggle-switch.active {
+  background-color: #00FF00;
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: #000000;
+  transition: transform 0.2s;
+}
+
+.toggle-switch.active::after {
+  transform: translateX(24px);
+}
+
+/* Header */
+.header {
+  padding: 16px;
+  background-color: #FFFF00;
+  border-bottom: 2px solid #000000;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.header p {
+  margin: 4px 0 0 0;
+  font-size: 11px;
+  color: #333;
+}

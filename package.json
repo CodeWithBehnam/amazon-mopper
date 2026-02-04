@@ -1,0 +1,32 @@
+{
+  "name": "amazon-mopper",
+  "version": "1.0.0",
+  "description": "Chrome extension to enhance Amazon shopping experience with neobrutalism badges",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "2.0.0-beta.26",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/bun": "latest",
+    "@types/chrome": "^0.1.36",
+    "@types/react": "^19.2.11",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.3",
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "vite": "^7.3.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}

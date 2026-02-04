@@ -1,0 +1,8 @@
+<svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" fill="#FFFF00"/>
+  <rect x="4" y="4" width="120" height="120" fill="#FFFF00" stroke="#000" stroke-width="4"/>
+  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
+        font-family="system-ui, sans-serif" font-weight="bold" font-size="52px" fill="#000">
+    AM
+  </text>
+</svg>

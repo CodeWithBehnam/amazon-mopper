@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:host {
+  /* Reset to prevent Amazon's styles from leaking in */
+  all: initial;
+
+  /* Neobrutalism Design Tokens */
+  --border-width: 2px;
+  --border-color: #000000;
+  --border-radius: 0;
+  --shadow: 2px 2px 0 #000000;
+
+  /* Primary Colors */
+  --color-discount: #FFFF00;
+  --color-best-value: #00FF00;
+  --color-delivery: #FFFFFF;
+  --color-red: #FF0000;
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+
+  /* Typography */
+  --font-family: system-ui, -apple-system, sans-serif;
+  --font-weight: 700;
+  --font-size-badge: 11px;
+  --font-size-price: 14px;
+
+  font-family: var(--font-family);
+}
+
+/* Badge Base Styles */
+.mopper-badge {
+  position: absolute;
+  padding: 4px 8px;
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size-badge);
+  text-transform: uppercase;
+  z-index: 100;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.mopper-badge--discount {
+  background-color: var(--color-discount);
+  color: var(--color-black);
+  top: 4px;
+  left: 4px;
+}
+
+.mopper-badge--best-value {
+  background-color: var(--color-best-value);
+  color: var(--color-black);
+  top: 28px;
+  left: 4px;
+}
+
+.mopper-badge--delivery {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  position: relative;
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 12px;
+}
+
+/* Best Value Border */
+.mopper-best-value-border {
+  outline: 3px solid var(--color-best-value) !important;
+  outline-offset: -3px;
+}
+
+/* Rounded Price */
+.mopper-rounded-price {
+  font-weight: var(--font-weight);
+  color: var(--color-black);
+}
+
+/* Truncated Title */
+.mopper-truncated-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}

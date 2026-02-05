@@ -12,6 +12,7 @@ export interface ProductData {
   pricePerUnitText: string | null
   deliveryDate: Date | null
   deliveryText: string | null
+  hasSameDayDelivery: boolean
   title: string | null
   currency: string
 }
@@ -169,6 +170,7 @@ export function extractProductData(productEl: HTMLElement): ProductData {
     pricePerUnitText: null,
     deliveryDate: null,
     deliveryText: null,
+    hasSameDayDelivery: false,
     title: null,
     currency: '£',
   }
@@ -201,6 +203,12 @@ export function extractProductData(productEl: HTMLElement): ProductData {
   if (deliveryEl?.textContent) {
     data.deliveryText = deliveryEl.textContent.trim()
     data.deliveryDate = parseDeliveryDate(deliveryEl.textContent)
+  }
+
+  // Detect same-day delivery by scanning all text in product
+  const fullText = productEl.textContent || ''
+  if (/free\s+delivery\s+today/i.test(fullText) || /same[- ]?day/i.test(fullText)) {
+    data.hasSameDayDelivery = true
   }
 
   // Extract title

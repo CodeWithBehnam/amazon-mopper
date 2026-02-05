@@ -29,7 +29,7 @@ export default defineManifest({
   manifest_version: 3,
   name: 'Amazon Mopper',
   description: 'Enhance your Amazon shopping experience with discount badges, best value indicators, and delivery countdowns',
-  version: '1.0.2',
+  version: '1.0.3',
   icons: {
     '16': 'public/icons/icon16.png',
     '48': 'public/icons/icon48.png',

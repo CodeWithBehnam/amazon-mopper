@@ -15,6 +15,7 @@ import {
   PRIME_SELECTORS,
   IMAGE_CONTAINER_SELECTORS,
   DELIVERY_SELECTORS,
+  DELIVERY_CLUTTER_PATTERNS,
   TITLE_SELECTORS,
 } from './lib/selectors'
 import { DiscountBadge } from './components/DiscountBadge'
@@ -202,11 +203,9 @@ export function App({ shadowRoot }: AppProps) {
           if (deliveryEl instanceof HTMLElement && deliveryEl.parentElement) {
             // Double-check parent doesn't already have a badge
             if (!deliveryEl.parentElement.querySelector('.mopper-delivery-badge')) {
-              const countdownBadge = document.createElement('span')
-              countdownBadge.className = 'mopper-delivery-badge'
-              countdownBadge.style.cssText = `
+              const badgeStyle = `
                 display: inline-block;
-                margin-left: 8px;
+                margin-right: 6px;
                 padding: 2px 6px;
                 background: #FFFF00;
                 border: 2px solid #000;
@@ -214,11 +213,51 @@ export function App({ shadowRoot }: AppProps) {
                 font-size: 11px;
                 box-shadow: 2px 2px 0 #000;
               `
+
+              // Create a container for badges
+              const badgeRow = document.createElement('div')
+              badgeRow.className = 'mopper-delivery-badge'
+              badgeRow.style.cssText = 'margin-top: 4px;'
+
+              // Delivery countdown badge
+              const countdownBadge = document.createElement('span')
+              countdownBadge.style.cssText = badgeStyle
               countdownBadge.textContent = `📦 ${text}`
-              deliveryEl.parentElement.appendChild(countdownBadge)
+              badgeRow.appendChild(countdownBadge)
+
+              // "Today over £20" badge if same-day delivery is available
+              if (data.hasSameDayDelivery) {
+                const todayBadge = document.createElement('span')
+                todayBadge.style.cssText = badgeStyle
+                todayBadge.textContent = `🚀 Today over £20`
+                badgeRow.appendChild(todayBadge)
+              }
+
+              deliveryEl.parentElement.appendChild(badgeRow)
             }
           }
         }
+      }
+
+      // Hide delivery clutter text (Save X%, Tomorrow, FREE delivery, etc.)
+      if (settings.showDeliveryCountdown && !element.dataset.mopperClutterHidden) {
+        element.dataset.mopperClutterHidden = 'true'
+
+        // Walk through text-containing elements below the price area
+        // and hide those matching delivery clutter patterns
+        const allRows = element.querySelectorAll('.a-row, .a-section, [class*="delivery"], [class*="shipping"]')
+        allRows.forEach((row) => {
+          if (!(row instanceof HTMLElement)) return
+          // Skip our own badges
+          if (row.classList.contains('mopper-delivery-badge')) return
+          if (row.querySelector('.mopper-delivery-badge')) return
+
+          const text = row.textContent?.trim() || ''
+          const isClutter = DELIVERY_CLUTTER_PATTERNS.some((pattern) => pattern.test(text))
+          if (isClutter) {
+            row.style.display = 'none'
+          }
+        })
       }
     })
   }, [productStates, settings])

@@ -1,6 +1,6 @@
 {
   "name": "amazon-mopper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Chrome extension to enhance Amazon shopping experience with neobrutalism badges",
   "type": "module",
   "private": true,

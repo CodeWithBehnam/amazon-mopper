@@ -65,6 +65,27 @@ export const TITLE_SELECTORS = [
   '[data-cy="title-recipe"] h2 span',
 ]
 
+// Delivery clutter selectors - text to hide below price
+// These match the container rows with savings/delivery text
+export const DELIVERY_CLUTTER_SELECTORS = [
+  // "Save X% on any..." savings promotion text
+  '.a-row .a-size-base.a-color-secondary:not(.mopper-delivery-badge)',
+  // Delivery text rows
+  '.a-row.a-size-base.a-color-secondary',
+  // Free delivery message containers
+  '[data-cy="delivery-recipe"]',
+  // Generic delivery area rows
+  '.a-row.s-align-children-center',
+]
+
+// Text patterns that identify delivery clutter lines to hide
+export const DELIVERY_CLUTTER_PATTERNS = [
+  /save\s+\d+%/i,
+  /^(?:\s*)?tomorrow\s*$/i,
+  /free\s+delivery/i,
+  /fastest\s+delivery/i,
+]
+
 // Product image container (for badge positioning)
 export const IMAGE_CONTAINER_SELECTORS = [
   '.s-image-square-aspect',

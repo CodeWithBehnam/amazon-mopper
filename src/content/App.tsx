@@ -169,12 +169,12 @@ export function App({ shadowRoot }: AppProps) {
 
         // Find the main price container (not struck-through RRP prices)
         const mainPriceContainer = element.querySelector('.a-price:not([data-a-strike="true"])')
-        if (mainPriceContainer && !mainPriceContainer.querySelector('.mopper-rounded-price')) {
+        if (mainPriceContainer?.parentElement && !mainPriceContainer.parentElement.querySelector('.mopper-rounded-price')) {
           const roundedSpan = document.createElement('span')
           roundedSpan.className = 'mopper-rounded-price'
           roundedSpan.style.cssText = 'margin-left: 8px; font-weight: bold; color: #B12704; font-size: 1.1em;'
           roundedSpan.textContent = roundedText
-          mainPriceContainer.parentElement?.insertBefore(roundedSpan, mainPriceContainer.nextSibling)
+          mainPriceContainer.parentElement.insertBefore(roundedSpan, mainPriceContainer.nextSibling)
         }
       }
 
@@ -190,28 +190,34 @@ export function App({ shadowRoot }: AppProps) {
       }
 
       // Append delivery countdown directly as HTML (simpler than React portal)
-      if (settings.showDeliveryCountdown && state.daysUntilDelivery !== null && !element.dataset.mopperDeliveryAdded) {
-        element.dataset.mopperDeliveryAdded = 'true'
-        const days = state.daysUntilDelivery
-        const text = days === 0 ? 'Today' : days === 1 ? 'Tomorrow' : `${days} days`
+      if (settings.showDeliveryCountdown && state.daysUntilDelivery !== null) {
+        // Check if badge already exists in this product
+        const existingBadge = element.querySelector('.mopper-delivery-badge')
+        if (!existingBadge) {
+          const days = state.daysUntilDelivery
+          const text = days === 0 ? 'Today' : days === 1 ? 'Tomorrow' : `${days} days`
 
-        // Find delivery text element
-        const deliveryEl = querySelector(element, DELIVERY_SELECTORS)
-        if (deliveryEl instanceof HTMLElement) {
-          const countdownBadge = document.createElement('span')
-          countdownBadge.className = 'mopper-delivery-badge'
-          countdownBadge.style.cssText = `
-            display: inline-block;
-            margin-left: 8px;
-            padding: 2px 6px;
-            background: #FFFF00;
-            border: 2px solid #000;
-            font-weight: bold;
-            font-size: 11px;
-            box-shadow: 2px 2px 0 #000;
-          `
-          countdownBadge.textContent = `📦 ${text}`
-          deliveryEl.parentElement?.appendChild(countdownBadge)
+          // Find delivery text element
+          const deliveryEl = querySelector(element, DELIVERY_SELECTORS)
+          if (deliveryEl instanceof HTMLElement && deliveryEl.parentElement) {
+            // Double-check parent doesn't already have a badge
+            if (!deliveryEl.parentElement.querySelector('.mopper-delivery-badge')) {
+              const countdownBadge = document.createElement('span')
+              countdownBadge.className = 'mopper-delivery-badge'
+              countdownBadge.style.cssText = `
+                display: inline-block;
+                margin-left: 8px;
+                padding: 2px 6px;
+                background: #FFFF00;
+                border: 2px solid #000;
+                font-weight: bold;
+                font-size: 11px;
+                box-shadow: 2px 2px 0 #000;
+              `
+              countdownBadge.textContent = `📦 ${text}`
+              deliveryEl.parentElement.appendChild(countdownBadge)
+            }
+          }
         }
       }
     })

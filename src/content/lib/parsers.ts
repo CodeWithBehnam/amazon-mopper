@@ -22,11 +22,11 @@ export interface ProductData {
 export function extractCurrency(text: string): string {
   // Common currency patterns
   const currencyMatch = text.match(/^([£$€¥₹]|R\$|kr|zł)/i)
-  if (currencyMatch) return currencyMatch[1]
+  if (currencyMatch) return currencyMatch[1]!
 
   // Check for currency at end (e.g., "10,00 €")
   const endMatch = text.match(/\s*([€$£¥₹])\s*$/)
-  if (endMatch) return endMatch[1]
+  if (endMatch) return endMatch[1]!
 
   return '£' // Default fallback
 }
@@ -76,7 +76,7 @@ export function parseDeliveryDate(text: string): Date | null {
   // Handle relative days like "in 3 days"
   const relativeDaysMatch = text.match(/in\s+(\d+)\s+days?/i)
   if (relativeDaysMatch) {
-    const days = parseInt(relativeDaysMatch[1], 10)
+    const days = parseInt(relativeDaysMatch[1]!, 10)
     const futureDate = new Date(now)
     futureDate.setDate(futureDate.getDate() + days)
     return futureDate
@@ -92,10 +92,10 @@ export function parseDeliveryDate(text: string): Date | null {
   // Pattern: "Feb 10" or "February 10"
   const usFormat = text.match(/([a-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?/i)
   if (usFormat) {
-    const monthStr = usFormat[1].toLowerCase().slice(0, 3)
+    const monthStr = usFormat[1]!.toLowerCase().slice(0, 3)
     const monthIndex = monthNames.indexOf(monthStr)
     if (monthIndex !== -1) {
-      const day = parseInt(usFormat[2], 10)
+      const day = parseInt(usFormat[2]!, 10)
       const date = new Date(currentYear, monthIndex, day)
       // If date is in the past, assume next year
       if (date < now) {
@@ -108,8 +108,8 @@ export function parseDeliveryDate(text: string): Date | null {
   // Pattern: "10 Feb" or "10 February"
   const euFormat = text.match(/(\d{1,2})(?:st|nd|rd|th)?\s+([a-z]+)/i)
   if (euFormat) {
-    const day = parseInt(euFormat[1], 10)
-    const monthStr = euFormat[2].toLowerCase().slice(0, 3)
+    const day = parseInt(euFormat[1]!, 10)
+    const monthStr = euFormat[2]!.toLowerCase().slice(0, 3)
     const monthIndex = monthNames.indexOf(monthStr)
     if (monthIndex !== -1) {
       const date = new Date(currentYear, monthIndex, day)
@@ -124,10 +124,10 @@ export function parseDeliveryDate(text: string): Date | null {
   // Pattern: "Feb 10 - 15" or "Feb 10-15"
   const rangeMatch = text.match(/([a-z]+)\s+(\d{1,2})\s*[-–]\s*(\d{1,2})/i)
   if (rangeMatch) {
-    const monthStr = rangeMatch[1].toLowerCase().slice(0, 3)
+    const monthStr = rangeMatch[1]!.toLowerCase().slice(0, 3)
     const monthIndex = monthNames.indexOf(monthStr)
     if (monthIndex !== -1) {
-      const startDay = parseInt(rangeMatch[2], 10)
+      const startDay = parseInt(rangeMatch[2]!, 10)
       const date = new Date(currentYear, monthIndex, startDay)
       if (date < now) {
         date.setFullYear(currentYear + 1)
@@ -149,9 +149,9 @@ export function parsePricePerUnit(text: string): { price: number; unit: string }
   // Pattern: £X.XX/unit or (£X.XX/unit)
   const match = text.match(/[£$€¥₹]?\s*([\d.,]+)\s*\/\s*(\w+)/i)
   if (match) {
-    const price = parsePrice(match[1])
+    const price = parsePrice(match[1]!)
     if (price !== null) {
-      return { price, unit: match[2].toLowerCase() }
+      return { price, unit: match[2]!.toLowerCase() }
     }
   }
 

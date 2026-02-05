@@ -109,3 +109,17 @@ bun --hot ./index.ts
 ```
 
 For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
+
+## Project Architecture
+
+Chrome Extension (Manifest V3) with React content script and popup.
+- Build: `bun run build` (uses Vite, outputs to `dist/`)
+- Content script uses Shadow DOM for style isolation (`src/content/index.tsx`)
+- Badges rendered via React portals into DOM containers; inline modifications use direct DOM manipulation
+- Test by loading `dist/` as unpacked extension in `chrome://extensions`
+
+## DOM Manipulation Gotchas
+
+- When checking for duplicate DOM elements, check the SAME parent where the element was inserted (e.g., if inserted as sibling via `parentElement.insertBefore`, check `parentElement.querySelector`, not the reference element itself)
+- Avoid generic CSS selectors (e.g., `span.a-text-bold`) in Amazon DOM — they match too many unrelated elements. Prefer `data-*` attribute selectors
+- Amazon's DOM changes frequently — selectors in `src/content/lib/selectors.ts` use fallback chains

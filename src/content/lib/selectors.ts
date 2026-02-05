@@ -38,13 +38,12 @@ export const PRICE_SELECTORS = {
 export const DELIVERY_SELECTORS = [
   // Search results page selectors
   '[data-csa-c-delivery-time]',
+  '[data-csa-c-delivery-price]',
   '.a-row.a-size-base.a-color-secondary.s-align-children-center',
-  '.a-color-base.a-text-bold',
-  // Contains "delivery" or "Tomorrow"
-  'span.a-text-bold',
   // Product page selectors
   '#mir-layout-DELIVERY_BLOCK-slot-PRIMARY_DELIVERY_MESSAGE_LARGE',
   '#delivery-message',
+  '#deliveryMessageMirId',
   '.a-color-success.a-text-bold',
 ]
 
